@@ -79,10 +79,7 @@ public class Main {
             System.out.println("Would you like to generate a new set of numbers: y/n");
             String prompt_repeat = new_scanner.nextLine();
 
-            if (prompt_repeat.equals("y")) {
-                repeat = true;
-            }
-            else if (prompt_repeat.equals("n")){
+            if (prompt_repeat.equals("n")){
                 repeat = false;
             }
             System.out.println();
