@@ -25,4 +25,12 @@ public class Card {
     {
         return worth;
     }
+
+    public String interpretValue(int i) {
+        return "The value of the card is " + i;
+    }
+
+    public String interpretValue(String s) {
+        return "The value of the card is " + s;
+    }
 }

@@ -1,28 +1,43 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Random;
 
 public class Main {
 
     public static void main(String[]args) {
-        Scanner scanner = new Scanner(System.in);
-        Random rand = new Random();
+        Scanner scanner;
         Deck deck = new Deck();
-        boolean repeat = true;
+        boolean repeat_generator = true;
+        boolean num_cards_format = true;
         ArrayList<String> random_cards = new ArrayList<String>();
 
         System.out.println("Welcome to the Random Card Generator!");
         System.out.println("This random generator allows you to generate up to 13 random cards from a deck of cards, at once!");
 
-        while(repeat) {
+        while(repeat_generator) {
             random_cards.clear();
+            double num_cards = 0;
             System.out.println("Please enter how many random cards you would like to generate: ");
-
-            int num_cards = scanner.nextInt();
-
+            while (num_cards_format) {
+                scanner = new Scanner(System.in);
+                try {
+                    num_cards = scanner.nextInt();
+                    if (num_cards > 13 && num_cards > Integer.MIN_VALUE) {
+                        System.out.println("Too many! Please enter a number up to 13!");
+                        num_cards_format = true;
+                    }
+                    else if (!(num_cards > 13)){
+                        num_cards_format = false;
+                    }
+                }
+                catch (InputMismatchException e) {
+                    System.out.println("Please enter a NUMBER up to 13.");
+                    num_cards_format = true;
+                }
+            }
             for (int i = 0; i < num_cards; i++) {
-                int rand_int = rand.nextInt(52 - i);
-                String abbrev_card = deck.randomCard(rand_int);
+                Integer rand_int = new Integer((int)Math.abs(Math.round(Math.random()*(52 - i)) - 1));
+                final String abbrev_card = deck.randomCard(rand_int);
                 String card_value;
                 String card_suit = null;
 
@@ -62,17 +77,19 @@ public class Main {
 
                 Card random_card = new Card(card_value, card_suit);
                 random_cards.add(random_card.getCard());
+                rand_int += 1;
                 deck.removeCard(rand_int);
             }
 
             System.out.println();
-            System.out.println("Your randomly generated cards are:");
+            System.out.print("Your randomly generated cards are:\n");
             System.out.println();
             for (int i = 0; i < num_cards; i++) {
                 System.out.println((i + 1) + ": " + random_cards.get(i));
             }
 
             deck.resetDeck();
+            num_cards_format = true;
 
             Scanner new_scanner = new Scanner(System.in);
             System.out.println();
@@ -80,12 +97,12 @@ public class Main {
             String prompt_repeat = new_scanner.nextLine();
 
             if (prompt_repeat.equals("n")){
-                repeat = false;
+                repeat_generator = false;
             }
             System.out.println();
 
         }
-        System.out.println("Thank you for using the 'Random Card Generator'!");
+        System.out.println(deck);
 
         try {
             Thread.sleep(3000);

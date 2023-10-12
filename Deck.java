@@ -11,11 +11,16 @@ public class Deck {
                     "AD", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "10D", "JD", "QD", "KD"));
 
 
+    public String toString() {
+        return "Thank you for using the 'Random Card Generator'!";
+    }
+
     public String randomCard(int rand_num) {
         return cards.get(rand_num);
     }
 
     public void removeCard(int i) {
+        i--;
         cards.remove(i);
     }
 
