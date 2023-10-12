@@ -1,13 +1,11 @@
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Random;
 
 public class Main {
 
     public static void main(String[]args) {
         Scanner scanner;
-        Random rand = new Random();
         Deck deck = new Deck();
         boolean repeat_generator = true;
         boolean num_cards_format = true;
@@ -23,7 +21,7 @@ public class Main {
             while (num_cards_format) {
                 scanner = new Scanner(System.in);
                 try {
-                    num_cards = (double) scanner.nextInt();
+                    num_cards = scanner.nextInt();
                     if (num_cards > 13) {
                         System.out.println("Too many! Please enter a number up to 13!");
                         num_cards_format = true;
@@ -38,8 +36,8 @@ public class Main {
                 }
             }
             for (int i = 0; i < num_cards; i++) {
-                final int rand_int = rand.nextInt(52 - i);
-                String abbrev_card = deck.randomCard(rand_int);
+                Integer rand_int = new Integer((int) (Math.random()*(52 - i)));
+                final String abbrev_card = deck.randomCard(rand_int);
                 String card_value;
                 String card_suit = null;
 
@@ -79,7 +77,7 @@ public class Main {
 
                 Card random_card = new Card(card_value, card_suit);
                 random_cards.add(random_card.getCard());
-                deck.removeCard(rand_int);
+                deck.removeCard(rand_int+=1);
             }
 
             System.out.println();
@@ -103,7 +101,7 @@ public class Main {
             System.out.println();
 
         }
-        System.out.println("Thank you for using the 'Random Card Generator'!");
+        System.out.println(deck);
 
         try {
             Thread.sleep(3000);
