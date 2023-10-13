@@ -9,6 +9,7 @@ public class Main {
         Deck deck = new Deck();
         boolean repeat_generator = true;
         boolean num_cards_format = true;
+        String prompt_repeat = "";
         ArrayList<String> random_cards = new ArrayList<String>();
 
         System.out.println("Welcome to the Random Card Generator!");
@@ -94,13 +95,22 @@ public class Main {
             Scanner new_scanner = new Scanner(System.in);
             System.out.println();
             System.out.println("Would you like to generate a new set of numbers: y/n");
-            String prompt_repeat = new_scanner.nextLine();
 
-            if (prompt_repeat.equals("n")){
-                repeat_generator = false;
+            while (!(prompt_repeat.equals("y") || prompt_repeat.equals("n"))) {
+                prompt_repeat = new_scanner.nextLine();
+
+                if (prompt_repeat.equals("y")) {
+                    repeat_generator = true;
+                    System.out.println();
+                } else if (prompt_repeat.equals("n")) {
+                    repeat_generator = false;
+                    System.out.println();
+                } else {
+                    System.out.println("Please enter either \"y\" or \"n\":");
+                }
+
             }
-            System.out.println();
-
+            prompt_repeat = "";
         }
         System.out.println(deck);
 
